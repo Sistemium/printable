@@ -3,24 +3,21 @@ export function routerConfig(stateHelperProvider, $urlRouterProvider) {
   stateHelperProvider
     .state({
         name: 'root',
-        url: '/',
+        url: '/{accessToken}',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main',
+
+        //name: 'accessToken',
+        //abstract: true,
+        //url: '/{accessToken}/p',
         children: [
           {
-            name: 'accessToken',
-            abstract: true,
-            url: '/{accessToken}/p',
-            children: [
-              {
-                name: 'shipmentRoutes',
-                url: '/shipmentRoutes',
-                templateUrl: 'app/main/reports/shipmentRoutes.html',
-                controller: 'ShipmentRoutes',
-                controllerAs: 'vm'
-              }
-            ]
+            name: 'shipmentRoutes',
+            url: '/p',
+            templateUrl: 'app/main/reports/shipmentRoutes/shipmentRoutes.html',
+            controller: 'ShipmentRoutesController',
+            controllerAs: 'vm'
           }
         ]
       }

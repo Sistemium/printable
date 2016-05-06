@@ -1,6 +1,5 @@
 export class MainController {
-  constructor ($state) {
+  constructor () {
     'ngInject';
-    console.log($state);
   }
 }
