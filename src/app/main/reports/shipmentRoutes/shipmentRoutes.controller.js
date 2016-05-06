@@ -4,7 +4,7 @@ export class ShipmentRoutesController {
   constructor ($http,$state,$log) {
     'ngInject'
 
-    this.shipmentRoutes = [];
+    this.data = [];
     this.state = {
       at: $state.params.accessToken
     };
@@ -19,7 +19,7 @@ export class ShipmentRoutesController {
         authorization: $state.params.accessToken
       }
     }).then((response) => {
-      this.shipmentRoutes = response.data;
+      this.data = response.data;
     }, (response) => {
       $log.error(response);
     });

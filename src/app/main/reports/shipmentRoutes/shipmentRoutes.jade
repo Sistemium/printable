@@ -1,23 +1,18 @@
 h1 Shipment routes
 
-table.table.table-striped.table-hover.table-responsive(
-ng-table='ctrl.tableParams'
-ng-show='ctrl.data.length'
-)
+table.table.table-striped.table-hover.table-responsive
   tr.clickable(
-  ng-repeat='row in $data track by row.id'
+  ng-repeat='row in vm.data track by row.id'
   ng-click='ctrl.click(row,$event)'
   )
-    td(title="'Статус'" sortable="'processing'")
-      | {{ctrl.statusLabel(row.processing)}}
-    td(title="'Водитель'" sortable="'drivenBy.name'") {{ row.drivenBy.name }}
+    td {{ row.drivenBy.name }}
       span(ng-if="row.driverAccount") &nbsp;
         i.fa.fa-mobile.green
-    td.number(title="'Точек'" sortable="'shipmentRoutePointCnt'" header-class="'number'")
+    td.number
       | {{row.agg.shipmentRoutePointCnt}}
-    td.number(title="'Накладных'" sortable="'agg.shipmentCnt'" header-class="'number'")
+    td.number
       | {{row.agg.shipmentCnt}}
-    td.number(title="'Шт.'" sortable="'agg.volumeSum'" header-class="'number'")
+    td.number
       | {{row.agg.volumeSum}}
     //td.number(title="'Пробег'" sortable="'locationKm'" header-class="'number'")
       | {{row.locationKm}}

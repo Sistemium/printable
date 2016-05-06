@@ -5,8 +5,10 @@ import { MainController } from './main/main.controller';
 import { ShipmentRoutesController } from './main/reports/shipmentRoutes/shipmentRoutes.controller';
 import { NavbarDirective } from '../app/components/navbar/navbar.directive';
 
-angular.module('streports', ['ui.router', 'ui.router.stateHelper'])
-  .config(config)
+angular.module('streports', [
+  'ui.router',
+  'ui.router.stateHelper'
+]).config(config)
   .config(routerConfig)
   .run(runBlock)
   .controller('MainController', MainController)
