@@ -5,6 +5,7 @@ export class ShipmentRoutesController {
     'ngInject'
 
     this.data = [];
+    this.printReady = false;
     this.state = {
       at: $state.params.accessToken
     };
@@ -20,8 +21,10 @@ export class ShipmentRoutesController {
       }
     }).then((response) => {
       this.data = response.data;
+      this.printReady = true;
     }, (response) => {
       $log.error(response);
+      this.printReady = true;
     });
   }
 }
