@@ -2,11 +2,10 @@
   'use strict';
 
   angular.module('streports')
-    .controller('ShipmentRouteReportModalController', function ShipmentRouteReportModalCtrl(Schema, $q, mapsHelper, $window, $timeout, $log) {
+    .controller('ShipmentRouteReportModalController', function ShipmentRouteReportModalCtrl(
+      mapsHelper, $window, $timeout, $log, $state, ShipmentRouteService
+    ) {
       var vm = this;
-      var ShipmentRoute = Schema.model('ShipmentRoute');
-      var ShipmentRoutePoint = Schema.model('ShipmentRoutePoint');
-      var Location = Schema.model('Location');
 
       vm.mapOptions = {
         avoidFractionalZoom: false,
@@ -139,35 +138,7 @@
         vm.locations = [];
         vm.rawLocations = [];
 
-        vm.busy = $q(function (resolve, reject) {
-          ShipmentRoute.find(shipmentRoute.id)
-            .then(function (sr) {
-
-              vm.shipmentRoute = sr;
-
-              Location.findAll({
-                shipmentRoute: sr.id
-              }, {cacheResponse: false, bypassCache: true}).then(function (data) {
-                vm.rawLocations = data;
-                ShipmentRoute.loadRelations(sr, ['ShipmentRoutePoint'], {bypassCache: true}).then(function () {
-
-                  vm.shipmentRoutePoints = sr.points;
-
-                  $q.all(_.map(vm.shipmentRoutePoints, function (i) {
-                    return ShipmentRoutePoint.loadRelations(i, ['Location'])
-                      .then(function (rp) {
-                        return rp;
-                      });
-                  })).then(resolve, reject);
-                }, reject);
-
-
-              }, reject);
-            })
-            .catch(function (res) {
-              vm.serverError = res;
-            });
-        });
+        vm.busy = ShipmentRouteService(vm, shipmentRoute);
 
         vm.busy.then(function (routePoints) {
 
@@ -180,28 +151,10 @@
 
       }
 
-      vm.shipmentRoute = {
-        "id": "3c04c9e9-1041-11e6-8130-005056850f57",
-        "ts": "2016-05-03 15:06:35.471",
-        "author": null,
-        "date": "2016-05-03",
-        "processing": "finished",
-        "commentText": null,
-        "driver": "686bfeb5-dc93-11e2-9d39-3c4a92df27e6",
-        "agg": {
-          "volumeIncidentCnt": 2,
-          "volumeSum": 2468,
-          "shipmentPositionCnt": 199,
-          "shipmentCnt": 21,
-          "shipmentRoutePointCnt": 14
-        },
-        "routePointsAgg": {"reachedCnt": 6}
-      };
-
       angular.extend(vm, {
 
         refresh: function () {
-          getData(vm.shipmentRoute);
+          getData($state.params.id);
         },
 
         fields: [
