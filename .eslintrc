@@ -11,6 +11,6 @@
     "inject": true,
     "_": true,
     "uuid": true,
-    "momemt": true
+    "moment": true
   }
 }
