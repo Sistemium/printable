@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('streports')
-  .factory('authInterceptor', function authInterceptor($stateParams, $window) {
+  .factory('authInterceptor', function authInterceptor($stateParams) {
     return {
       request: function (config) {
         var token = $stateParams.accessToken;
