@@ -21,6 +21,3 @@ table.table.table-striped.table-hover.table-responsive(ng-class="{printready: vm
         i.fa.fa-exclamation-triangle.red
       button.btn.btn-default(ng-if="row.routePointsAgg.reachedCnt" title="Отчет о прибытии" ng-click="ctrl.printReport(row,$event)")
         i.glyphicon.glyphicon-print.blue
-
-{{ vm.state | json }}
-{{ vm.shipmentRoutes | json }}

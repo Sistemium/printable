@@ -1,0 +1,36 @@
+.large-map
+  ya-map.ya-map-container(
+  ng-if="ctrl.map"
+  ya-behaviors="-DblClickZoom -Ruler -Drag -ScrollZoom"
+  ya-options="{{ctrl.mapOptions}}"
+  ya-controls=""
+  ya-zoom="15"
+  ya-center="{{ctrl.map.yaCenter}}"
+  ya-after-init="ctrl.map.afterMapInit($target)"
+  )
+    ya-collection(ya-options="{preset:'islands#blueStretchyIcon'}")
+      ya-geo-object(
+      ng-repeat="point in ctrl.markers track by point.id"
+      ya-source="point"
+      )
+    ya-geo-object(
+    ya-options="{preset:'islands#brownStretchyIcon'}"
+    ng-if="ctrl.startMarker"
+    ya-source="ctrl.startMarker"
+    )
+    ya-geo-object(
+    ng-if="ctrl.track"
+    ya-source="ctrl.track"
+    ya-options="{balloonHasCloseButton:false,strokeColor:'#000000',strokeWidth:2,strokeOpacity:1}"
+    )
+
+table.table.table-striped.table-responsive(ng-if="ctrl.data.length")
+  thead
+    th №
+    th Точка
+    th Прибыл
+  tbody
+    tr(ng-repeat="item in ctrl.data track by item.id")
+      td {{ $index + 1 }}
+      td {{ ::item.name }}
+      td {{ ::item.reachedAt.timestamp | amDateFormat: 'HH:mm'}}

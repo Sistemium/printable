@@ -1,30 +1,29 @@
-'use strict';
+(function () {
+  'use strict';
 
-export class ShipmentRoutesController {
-  constructor ($http,$state,$log) {
-    'ngInject'
+  angular.module('streports')
+    /** @ngInject */
+    .controller('ShipmentRoutesController', function ShipmentRoutesController(ShipmentRoutesInitService, $state, $log) {
+      'ngInject'
 
-    this.data = [];
-    this.printReady = false;
-    this.state = {
-      at: $state.params.accessToken
-    };
-    this.init($http, $state, $log);
-  }
+      var vm = this;
+      vm.data = [];
+      vm.printReady = false;
+      vm.state = {
+        at: $state.params.accessToken
+      };
 
-  init($http, $state, $log) {
-    $http({
-      method: 'GET',
-      url: 'https://r50.sistemium.com/api2/jsd/dr50/ShipmentRoute',
-      headers: {
-        authorization: $state.params.accessToken
+      function init() {
+        ShipmentRoutesInitService.then(function (response) {
+          vm.data = response.data;
+          vm.printReady = true;
+        }, function (response) {
+          $log.error(response);
+          vm.printReady = true;
+        });
       }
-    }).then((response) => {
-      this.data = response.data;
-      this.printReady = true;
-    }, (response) => {
-      $log.error(response);
-      this.printReady = true;
-    });
-  }
-}
+
+      init();
+    })
+  ;
+})();

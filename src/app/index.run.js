@@ -1,4 +1,10 @@
-export function runBlock ($log) {
-  'ngInject';
-  $log.debug('runBlock end');
-}
+(function () {
+  'use strict';
+
+  angular
+    .module('streports')
+    .run(function runBlock($log) {
+      $log.debug('runBlock end');
+    })
+  ;
+})();
