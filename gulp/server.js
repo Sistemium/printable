@@ -38,7 +38,10 @@ function browserSyncInit(baseDir, browser) {
   browserSync.instance = browserSync.init({
     startPath: '/',
     server: server,
-    browser: browser
+    browser: browser,
+    ui: false,
+    port: 3000,
+    ghostMode: false // set true to sync user actions across browsers
   });
 }
 
