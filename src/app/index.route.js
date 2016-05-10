@@ -22,10 +22,10 @@
               },
               {
                 name: 'shipmentRouteReportModal',
-                url: '/srrm',
+                url: '/srrm/{id}',
                 templateUrl: 'app/main/reports/shipmentRouteReportModal/shipmentRouteReportModal.html',
                 controller: 'ShipmentRouteReportModalController',
-                controllerAs: 'vm'
+                controllerAs: 'ctrl'
               }
             ]
           }
