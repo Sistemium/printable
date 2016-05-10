@@ -6,6 +6,7 @@
       'ui.router',
       'ui.router.stateHelper',
       'sistemium',
-      'yaMap'
+      'yaMap',
+      'angularMoment'
     ]);
 })();
