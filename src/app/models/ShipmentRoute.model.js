@@ -4,7 +4,6 @@
 
   angular
     .module('streports')
-    /* @ngInject */
     .run(function ShipmentRouteModel(Schema) {
       Schema.register({
 

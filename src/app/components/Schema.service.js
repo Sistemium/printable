@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('streports')
-    /** @ngInject */
     .service('Schema', function SchemaService(saSchema, $http) {
       return saSchema({
 

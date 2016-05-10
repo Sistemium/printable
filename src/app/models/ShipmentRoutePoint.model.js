@@ -3,7 +3,6 @@
 
   angular
     .module('streports')
-    /** @ngInject */
     .run(function ShipmentRoutePointModel(Schema) {
       Schema.register({
 

@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('streports')
-    /** @ngInject */
     .service('mapsHelper', function mapsHelper($window, mapApiLoad, $log, $document) {
       var me = {
         google: $window.google,

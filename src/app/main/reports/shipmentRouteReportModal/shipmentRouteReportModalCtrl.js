@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('streports')
-    /** @ngInject */
     .controller('ShipmentRouteReportModalController', function ShipmentRouteReportModalCtrl(Schema, $q, mapsHelper, $window, $timeout, $log) {
       var vm = this;
       var ShipmentRoute = Schema.model('ShipmentRoute');

@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('streports')
-    /** @ngInject */
     .service('ShipmentRoutesInitService', function ShipmentRoutesInitService($http, $state) {
       return $http({
         method: 'GET',

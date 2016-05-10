@@ -3,7 +3,6 @@
 
   angular
     .module('streports')
-    /** @ngInject */
     .run(function LocationModel(Schema) {
       Schema.register({
         name: 'Location',

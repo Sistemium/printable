@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('streports')
-    /** @ngInject */
     .controller('ShipmentRoutesController', function ShipmentRoutesController(ShipmentRoutesInitService, $state, $log) {
       'ngInject'
 
