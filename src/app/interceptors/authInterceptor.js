@@ -12,7 +12,7 @@ angular.module('streports')
         }
 
         if (/^JSDATA/.test(config.url)) {
-          config.url = config.url.replace(/^JSDATA/, $window.localStorage.getItem('JSData.BasePath'));
+          config.url = config.url.replace(/^JSDATA/, 'https://api.sistemium.com/api2/jsd/dr50/');
         }
 
         return config;
