@@ -3,7 +3,7 @@
 
   angular
     .module('streports')
-    .directive('navbarDirective', function NavbarDirective() {
+    .directive('navbar', function NavbarDirective() {
       return {
         restrict: 'E',
         templateUrl: 'app/components/navbar/navbar.html'
