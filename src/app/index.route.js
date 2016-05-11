@@ -18,7 +18,7 @@
                 url: '/p',
                 templateUrl: 'app/main/reports/shipmentRoutes/shipmentRoutes.html',
                 controller: 'ShipmentRoutesController',
-                controllerAs: 'vm'
+                controllerAs: 'ctrl'
               },
               {
                 name: 'shipmentRouteReportModal',

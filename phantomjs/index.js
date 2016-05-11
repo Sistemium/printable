@@ -28,11 +28,11 @@ app.get('/report', function (req, res) {
 
     console.log(stdout);
 
-    var filename = path.join(__dirname, '../snap.pdf');
+    var filename = path.join(__dirname, `../${req.query.filename}`);
     res.sendFile(filename, {}, function (err) {
       if (err) {
         console.log(err);
-        return res.send(err.status);
+        return res.sendStatus('Error occurred...');
       }
       console.log('File sent!');
       fs.unlink(filename, function (err) {

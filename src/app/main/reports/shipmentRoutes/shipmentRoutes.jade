@@ -1,8 +1,8 @@
 h1 Shipment routes
 
-table.table.table-striped.table-hover.table-responsive(ng-class="{printready: vm.printReady}")
+table.table.table-striped.table-hover.table-responsive
   tr.clickable(
-  ng-repeat='row in vm.data track by row.id'
+  ng-repeat='row in ctrl.data track by row.id'
   ng-click='ctrl.click(row,$event)'
   )
     td {{ row.drivenBy.name }}
@@ -21,3 +21,4 @@ table.table.table-striped.table-hover.table-responsive(ng-class="{printready: vm
         i.fa.fa-exclamation-triangle.red
       button.btn.btn-default(ng-if="row.routePointsAgg.reachedCnt" title="Отчет о прибытии" ng-click="ctrl.printReport(row,$event)")
         i.glyphicon.glyphicon-print.blue
+#printReady(ng-if="ctrl.printReady")
