@@ -16,14 +16,14 @@ app.get('/report', function (req, res) {
     `${domain + req.query.path} ${req.query.filename}`
   ];
 
-  childProcess.exec(`${binPath} ${childArgs[0]} ${childArgs[1]}`, function(err, stdout, stderr) {
+  childProcess.exec(`${binPath} ${childArgs[0]} ${childArgs[1]}`, function (err, stdout, stderr) {
     if (err) {
       console.log(err);
-      process.exit();
+      res.send('Something went wrong, the url is incorrect');
     }
     if (stderr) {
       console.log(stderr);
-      process.exit();
+      res.send('Something went wrong, the url is incorrect');
     }
 
     console.log(stdout);
@@ -32,15 +32,13 @@ app.get('/report', function (req, res) {
     res.sendFile(filename, {}, function (err) {
       if (err) {
         console.log(err);
-        res.status(err.status).end();
+        return res.send(err.status);
       }
-      else {
-        console.log('File sent!');
-        fs.unlink(filename, function (err) {
-          if (err) console.log('Could not delete file', err);
-          else console.log(filename, 'successfully deleted!');
-        });
-      }
+      console.log('File sent!');
+      fs.unlink(filename, function (err) {
+        if (err) console.log('Could not delete file', err);
+        else console.log(filename, 'successfully deleted!');
+      });
     });
   });
 
