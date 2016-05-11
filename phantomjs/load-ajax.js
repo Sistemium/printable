@@ -45,6 +45,10 @@ var page = require('webpage').create(),
   fs = require('fs'),
   address, output, page;
 
+page.onConsoleMessage = function(msg) {
+  console.log(msg);
+};
+
 if (system.args.length != 3) {
   console.log('Usage: phantomjs load_ajax.js URL output_filename');
   phantom.exit(1);
@@ -64,7 +68,7 @@ if (system.args.length != 3) {
       waitFor(function () {
         // Check in the page if a specific element is now visible
         return page.evaluate(function () {
-          return document.getElementsByClassName('printready').length > 0;
+          return !!document.getElementById('printReady');
         });
       }, function () {
         console.log("The search results list should be visible now." +

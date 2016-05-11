@@ -42,10 +42,10 @@
       function bounds(locations) {
 
         var
-          minLatitude = _.min(locations, 'latitude'),
-          maxLatitude = _.max(locations, 'latitude'),
-          minLongitude = _.min(locations, 'longitude'),
-          maxLongitude = _.max(locations, 'longitude')
+          minLatitude = _.minBy(locations, 'latitude'),
+          maxLatitude = _.maxBy(locations, 'latitude'),
+          minLongitude = _.minBy(locations, 'longitude'),
+          maxLongitude = _.maxBy(locations, 'longitude')
           ;
 
         var res = {

@@ -2,14 +2,51 @@
 
 var path = require('path');
 var childProcess = require('child_process');
-var phantomjs = require('phantomjs');
+var fs = require('fs');
+var phantomjs = require('phantomjs-prebuilt');
 var binPath = phantomjs.path;
+var express = require('express');
+var app = express();
 
-var childArgs = [
-  path.join(__dirname, 'phantomjs-script.js'),
-  'some other argument (passed to phantomjs script)'
-];
+var domain = 'http://localhost:3000/#/';
 
-childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
-  // handle results
+app.get('/report', function (req, res) {
+  var childArgs = [
+    path.join(__dirname, 'load-ajax.js'),
+    `${domain + req.query.path} ${req.query.filename}`
+  ];
+
+  childProcess.exec(`${binPath} ${childArgs[0]} ${childArgs[1]}`, function(err, stdout, stderr) {
+    if (err) {
+      console.log(err);
+      process.exit();
+    }
+    if (stderr) {
+      console.log(stderr);
+      process.exit();
+    }
+
+    console.log(stdout);
+
+    var filename = path.join(__dirname, '../snap.pdf');
+    res.sendFile(filename, {}, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(err.status).end();
+      }
+      else {
+        console.log('File sent!');
+        fs.unlink(filename, function (err) {
+          if (err) console.log('Could not delete file', err);
+          else console.log(filename, 'successfully deleted!');
+        });
+      }
+    });
+  });
+
 });
+
+app.listen(3123, function () {
+  console.log('Listening on port 3123...');
+});
+

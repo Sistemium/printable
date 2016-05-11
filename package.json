@@ -1,7 +1,10 @@
 {
   "name": "streports",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.13.4",
+    "phantomjs-prebuilt": "^2.1.7"
+  },
   "scripts": {
     "test": "gulp test"
   },

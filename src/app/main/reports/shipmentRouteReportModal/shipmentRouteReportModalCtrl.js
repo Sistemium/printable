@@ -10,7 +10,7 @@
       vm.mapOptions = {
         avoidFractionalZoom: false,
         margin: 0,
-        balloonAutoPanMargin: 300
+        balloonAutoPanMargin: 0
       };
 
       function yaLatLng(location) {
@@ -118,7 +118,7 @@
 
                 }
 
-              });
+              },500);
 
             });
 
@@ -151,27 +151,33 @@
 
       }
 
+      var readyDelay = 500;
+
       angular.extend(vm, {
 
         refresh: function () {
           getData($state.params.id);
         },
 
-        fields: [
-          {
-            key: 'drivenBy.name',
-            type: 'horizontalInput',
-            templateOptions: {
-              labelClass: 'col-xs-4',
-              inputClass: 'col-xs-8',
-              label: 'Водитель',
-              disabled: true
-            }
-          }
-        ],
+        trackInit: function() {
+          console.log ('trackInit');
+          $timeout(function() {
+            vm.trackReady = true;
+          },readyDelay);
+        },
 
-        print: function () {
-          $window.print();
+        markersInit: function() {
+          console.log ('markersInit');
+          $timeout(function(){
+            vm.markersReady = true;
+          },readyDelay);
+        },
+
+        startMarkerInit: function() {
+          console.log ('startMarkerInit');
+          $timeout(function() {
+            vm.startMarkerReady = true;
+          },readyDelay);
         }
 
       });
