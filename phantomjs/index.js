@@ -7,13 +7,16 @@ var phantomjs = require('phantomjs-prebuilt');
 var binPath = phantomjs.path;
 var express = require('express');
 var app = express();
+var uuid = require('node-uuid');
 
 var domain = 'http://localhost:3000/#/';
 
 app.get('/report', function (req, res) {
+  var filename = uuid.v4() + '.pdf';
+  var pathToFile = 'filesForPrinting/' + filename;
   var childArgs = [
     path.join(__dirname, 'load-ajax.js'),
-    `${domain + req.query.path} ${req.query.filename}`
+    `${domain + req.query.path} ${pathToFile}`
   ];
 
   childProcess.exec(`${binPath} ${childArgs[0]} ${childArgs[1]}`, function (err, stdout, stderr) {
@@ -28,14 +31,14 @@ app.get('/report', function (req, res) {
 
     console.log(stdout);
 
-    var filename = path.join(__dirname, `../${req.query.filename}`);
-    res.sendFile(filename, {}, function (err) {
+    var file = path.join(__dirname, `../${pathToFile}`);
+    res.sendFile(file, {}, function (err) {
       if (err) {
         console.log(err);
         return res.sendStatus('Error occurred...');
       }
       console.log('File sent!');
-      fs.unlink(filename, function (err) {
+      fs.unlink(file, function (err) {
         if (err) console.log('Could not delete file', err);
         else console.log(filename, 'successfully deleted!');
       });
