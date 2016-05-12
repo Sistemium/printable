@@ -22,10 +22,12 @@ app.get('/report', function (req, res) {
   childProcess.exec(`${binPath} ${childArgs[0]} ${childArgs[1]}`, function (err, stdout, stderr) {
     if (err) {
       console.log(err);
+      console.log('err in childProcess');
       res.send('Something went wrong, the url is incorrect');
     }
     if (stderr) {
       console.log(stderr);
+      console.log('stderr in childProcess');
       res.send('Something went wrong, the url is incorrect');
     }
 
@@ -35,13 +37,12 @@ app.get('/report', function (req, res) {
     res.sendFile(file, {}, function (err) {
       if (err) {
         console.log(err);
+        console.log('err in res.sendFile');
+        deleteFile(file);
         return res.sendStatus('Error occurred...');
       }
       console.log('File sent!');
-      fs.unlink(file, function (err) {
-        if (err) console.log('Could not delete file', err);
-        else console.log(filename, 'successfully deleted!');
-      });
+      deleteFile(file);
     });
   });
 
@@ -51,3 +52,9 @@ app.listen(3123, function () {
   console.log('Listening on port 3123...');
 });
 
+function deleteFile (file) {
+  fs.unlink(file, function (err) {
+    if (err) console.log('Could not delete file', err);
+    else console.log(file, 'successfully deleted!');
+  });
+}
