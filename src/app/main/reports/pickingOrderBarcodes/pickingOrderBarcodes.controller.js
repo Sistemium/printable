@@ -13,7 +13,7 @@
         }
       }).then(function (response) {
         vm.pickingOrderBarcodes = response.data;
-        console.log(response.data);
+        vm.printReady = true;
       }).catch((function (err) {
         console.log(err);
       }))

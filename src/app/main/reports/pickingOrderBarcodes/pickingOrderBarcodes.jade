@@ -3,3 +3,5 @@ h1 Баркоды
 div(ng-repeat='pickingOrderBarcode in ctrl.pickingOrderBarcodes')
   pre {{pickingOrderBarcode.name}}
   io-barcode(code="{{pickingOrderBarcode.code}}" type="CODE128B")
+
+#printReady(ng-if="ctrl.printReady")
