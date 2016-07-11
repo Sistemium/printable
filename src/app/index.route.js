@@ -26,6 +26,13 @@
                 templateUrl: 'app/main/reports/shipmentRouteReportModal/shipmentRouteReportModal.html',
                 controller: 'ShipmentRouteReportModalController',
                 controllerAs: 'ctrl'
+              },
+              {
+                name: 'pickingOrderBarcodes',
+                url: '/pob/{id}',
+                templateUrl: 'app/main/reports/pickingOrderBarcodes/pickingOrderBarcodes.html',
+                controller: 'PickingOrderBarcodesController',
+                controllerAs: 'ctrl'
               }
             ]
           }
