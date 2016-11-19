@@ -1,0 +1,10 @@
+h1 Баркоды
+
+div(ng-repeat='pickingOrderBarcode in ctrl.pickingOrderBarcodes' style="clear: both; text-align: left;")
+  p
+    .pull-right(style="margin-bottom: 15px; text-align: center")
+      io-barcode(code="{{pickingOrderBarcode.code}}" type="CODE128B" style="width: 200px")
+      div {{pickingOrderBarcode.code}}
+    label {{pickingOrderBarcode.name}}
+
+#printReady(ng-if="ctrl.printReady")

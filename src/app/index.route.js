@@ -16,21 +16,21 @@
               {
                 name: 'shipmentRoutes',
                 url: '/p',
-                templateUrl: 'app/main/reports/shipmentRoutes/shipmentRoutes.html',
+                templateUrl: 'app/reports/shipmentRoutes/shipmentRoutes.html',
                 controller: 'ShipmentRoutesController',
                 controllerAs: 'ctrl'
               },
               {
                 name: 'shipmentRouteReportModal',
                 url: '/srrm/{id}',
-                templateUrl: 'app/main/reports/shipmentRouteReportModal/shipmentRouteReportModal.html',
+                templateUrl: 'app/reports/shipmentRouteReportModal/shipmentRouteReportModal.html',
                 controller: 'ShipmentRouteReportModalController',
                 controllerAs: 'ctrl'
               },
               {
                 name: 'pickingOrderBarcodes',
                 url: '/pob/{id}',
-                templateUrl: 'app/main/reports/pickingOrderBarcodes/pickingOrderBarcodes.html',
+                templateUrl: 'app/reports/pickingOrderBarcodes/pickingOrderBarcodes.html',
                 controller: 'PickingOrderBarcodesController',
                 controllerAs: 'ctrl'
               }
