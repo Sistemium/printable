@@ -1,13 +1,10 @@
 {
-  "name": "streports",
-  "version": "0.0.0",
+  "name": "sistemium-printable",
+  "version": "0.0.1",
   "dependencies": {
-    "express": "^4.13.4",
-    "node-uuid": "^1.4.7",
-    "phantomjs-prebuilt": "^2.1.13"
   },
   "scripts": {
-    "test": "gulp test"
+    "serve": "gulp serve"
   },
   "devDependencies": {
     "sistemium-gulp": "^0.3.4"
