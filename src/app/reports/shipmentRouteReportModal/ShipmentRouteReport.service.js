@@ -1,44 +1,39 @@
-(function (ng) {
-  'use strict';
+'use strict';
 
-  ng.module('streports')
-    .service('ShipmentRouteService', function ($q, Schema) {
-      var ShipmentRoute = Schema.model('ShipmentRoute');
-      var ShipmentRoutePoint = Schema.model('ShipmentRoutePoint');
-      var Location = Schema.model('Location');
+(function () {
 
-      return function (vm, shipmentRoute) {
-        return $q(function (resolve, reject) {
-          ShipmentRoute.find(shipmentRoute)
-            .then(function (sr) {
+  function ShipmentRouteService($q, Schema) {
 
-              vm.shipmentRoute = sr;
+    let ShipmentRoute = Schema.model('ShipmentRoute');
+    let ShipmentRoutePoint = Schema.model('ShipmentRoutePoint');
+    let Location = Schema.model('Location');
 
-              Location.findAll({
-                shipmentRoute: sr.id
-              }, {cacheResponse: false, bypassCache: true}).then(function (data) {
-                vm.rawLocations = data;
-                ShipmentRoute.loadRelations(sr, ['ShipmentRoutePoint'], {bypassCache: true}).then(function () {
+    return function (vm, shipmentRoute) {
+      return ShipmentRoute.find(shipmentRoute)
+        .then(function (sr) {
 
-                  vm.shipmentRoutePoints = sr.points;
+          vm.shipmentRoute = sr;
 
-                  $q.all(_.map(vm.shipmentRoutePoints, function (i) {
-                    return ShipmentRoutePoint.loadRelations(i, ['Location'])
-                      .then(function (rp) {
-                        return rp;
-                      });
-                  })).then(resolve, reject);
-                }, reject);
-
-
-              }, reject);
-            })
-            .catch(function (res) {
-              vm.serverError = res;
+          return Location.findAll({shipmentRoute: sr.id}, {cacheResponse: false, bypassCache: true})
+            .then(function (data) {
+              vm.rawLocations = _.filter(data, {source: null});
+              return ShipmentRoute.loadRelations(sr, ['ShipmentRoutePoint'], {bypassCache: true})
+                .then(function () {
+                  vm.shipmentRoutePoints = _.filter(sr.points, 'shipment.ndocs.length');
+                  return $q.all(_.map(vm.shipmentRoutePoints, i => {
+                    return ShipmentRoutePoint.loadRelations(i, ['Location']);
+                  }));
+                });
             });
+        })
+        .catch(function (res) {
+          vm.serverError = res;
         });
-      };
-    })
-  ;
 
-})(angular);
+    };
+  }
+
+  angular.module('streports')
+    .service('ShipmentRouteService', ShipmentRouteService);
+
+})();

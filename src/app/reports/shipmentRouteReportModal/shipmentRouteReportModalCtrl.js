@@ -149,6 +149,11 @@
               };
 
               var routeStart = _.first(locs);
+              var firstCheckinCoordinates = _.get(_.first(vm.markers), 'geometry.coordinates');
+
+              if (firstCheckinCoordinates && routeStart) {
+                routeStart.isCheckin = mapsHelper.distanceFn(yaLatLng(routeStart), firstCheckinCoordinates) <= 25;
+              }
 
               if (!routeStart.isCheckin) {
                 vm.startMarker = mapsHelper.yMarkerConfig({
@@ -157,10 +162,10 @@
                   content: 'Старт',
                   hintContent: moment(routeStart.timestamp + ' Z').format('HH:mm')
                 });
-                $log.info(routeStart.timestamp);
               }
 
             }
+
 
           }
 

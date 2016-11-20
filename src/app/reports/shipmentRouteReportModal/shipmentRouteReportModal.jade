@@ -27,15 +27,20 @@ div.portrait
         ya-options="{balloonHasCloseButton:false,strokeColor:'#000000',strokeWidth:2,strokeOpacity:1}"
       )
 
+  .page-footer
+
   table.table.table-striped.table-responsive(ng-if="ctrl.data.length")
     thead
       th №
       th Точка
+      th Накладные
       th Прибыл
     tbody
       tr(ng-repeat="item in ctrl.data track by item.id")
         td {{ $index + 1 }}
         td {{ ::item.name }}
+        td
+          span {{::item.shipment.ndocs.join(', ')}}
         td {{ ::item.reachedAt.timestamp | amDateFormat: 'HH:mm'}}
 
   #printReady(ng-if="ctrl.trackReady && ctrl.markersReady && ctrl.startMarkerReady")
