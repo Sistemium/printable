@@ -27,19 +27,21 @@
 @media print {
 
   .large-map  {
-    zoom: 75%;
+    //zoom: 75%;
   }
 
   .ya-map-container {
     width: 800px;
   }
-}
-
-
-@media all {
-
-  .ya-map-container a {
-    //display: none !important;
+  @media print {
+    .page-footer {page-break-after: always;}
   }
-
 }
+
+.ya-map-container a {
+  display: none !important;
+}
+.gotoymaps * {
+  display: none !important;
+}
+
