@@ -5,13 +5,48 @@
     .controller('ShipmentRouteReportModalController', ShipmentRouteReportModalCtrl);
 
   function ShipmentRouteReportModalCtrl(mapsHelper, $timeout, $log, $state, ShipmentRouteService) {
-    var vm = this;
 
-    vm.mapOptions = {
-      avoidFractionalZoom: false,
-      margin: 0,
-      balloonAutoPanMargin: 0
-    };
+    var vm = this;
+    var readyDelay = 500;
+
+    angular.extend(vm, {
+
+      mapOptions: {
+        avoidFractionalZoom: false,
+        margin: 0,
+        balloonAutoPanMargin: 0
+      },
+
+      trackInit: function () {
+        setReady('trackReady');
+      },
+
+      markersInit: function () {
+        setReady('markersReady');
+      },
+
+      startMarkerInit: function () {
+        setReady('startMarkerReady');
+      }
+
+    });
+
+    /*
+     Init
+     */
+
+    getData($state.params.id);
+
+    /*
+     Functions
+     */
+
+    function setReady(code) {
+      $log.info('setReady:', code);
+      return $timeout(function () {
+        vm[code] = true;
+      }, readyDelay);
+    }
 
     function yaLatLng(location) {
       return mapsHelper.yLatLng(location);
@@ -157,39 +192,6 @@
       }, stopLoading);
 
     }
-
-    var readyDelay = 500;
-
-    angular.extend(vm, {
-
-      refresh: function () {
-        getData($state.params.id);
-      },
-
-      trackInit: function () {
-        $log.info('trackInit');
-        $timeout(function () {
-          vm.trackReady = true;
-        }, readyDelay);
-      },
-
-      markersInit: function () {
-        $log.info('markersInit');
-        $timeout(function () {
-          vm.markersReady = true;
-        }, readyDelay);
-      },
-
-      startMarkerInit: function () {
-        $log.info('startMarkerInit');
-        $timeout(function () {
-          vm.startMarkerReady = true;
-        }, readyDelay);
-      }
-
-    });
-
-    vm.refresh();
 
   }
 
