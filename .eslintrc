@@ -12,5 +12,9 @@
     "_": true,
     "uuid": true,
     "moment": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "script"
   }
 }
