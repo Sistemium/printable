@@ -10,7 +10,7 @@
 
       mapApiLoad(function () {
         me.yandex = $window.ymaps;
-        $log.info(me.yandex);
+        $log.info('maps ready');
       });
 
       function distanceFn(a, b) {
