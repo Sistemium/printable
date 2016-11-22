@@ -15,7 +15,7 @@ section.text-left(ng-repeat='route in vm.data track by route.id')
       span.flex-1 «{{ ::route.reportData.driver.truckBrand }}» № {{ ::route.reportData.driver.truckNumber }}
 
   div
-    img.width-100(ng-src='{{::route.mapSrc}}')
+    img.width-100(ng-src='{{route.map.src}}')
 
   table.table.table-responsive
     thead

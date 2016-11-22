@@ -15,10 +15,16 @@
 
     function init(date) {
 
+      $log.info('ShipmentRoutesController.init', date);
+
       ShipmentRoute.findAll({date}, {cacheResponse: false})
         .then(data => {
+          $log.info('ShipmentRoute.data.length:', data.length);
           vm.data = _.filter(data, 'mapSrc');
-          return $q.all(_.map(vm.data, route => ImageHelper.loadImage(route.mapSrc)));
+          return $q.all(_.map(vm.data, route => {
+            return ImageHelper.loadImage(route.mapSrc)
+              .then(img => $log.info('Got image', _.set(route, 'map.src', img.src)))
+          }));
         })
         .then(() => vm.printReady = true)
         .catch(error => {
