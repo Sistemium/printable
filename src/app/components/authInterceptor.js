@@ -13,7 +13,7 @@ angular.module('streports')
 
         if (/^JSDATA/.test(config.url)) {
           //TODO change dr50 to dev
-          config.url = config.url.replace(/^JSDATA/, 'https://api.sistemium.com/api2/jsd/dr50/');
+          config.url = config.url.replace(/^JSDATA/, 'http://localhost:9090/api/dr50');
         }
 
         return config;

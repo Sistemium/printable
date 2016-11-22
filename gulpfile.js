@@ -12,7 +12,8 @@ require('sistemium-gulp')
       replace: {
         js: {
           '\'//api-maps.yandex.ru': '\'https://api-maps.yandex.ru',
-          'localhost:9090': 'api1.sistemium.net:8878'
+          'http://localhost:9090/api': 'https://api.sistemium.com/v4d'
+          //net:8878
         }
       }
     }
