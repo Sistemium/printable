@@ -182,8 +182,11 @@
 
       vm.isLoading = true;
 
-      function stopLoading() {
+      function stopLoading(error) {
         vm.isLoading = false;
+        if (error) {
+          vm.errorReady = error;
+        }
       }
 
       vm.locations = [];

@@ -44,3 +44,4 @@ div
         td {{ ::item.reachedAt.timestamp | amDateFormat: 'HH:mm'}}
 
   #printReady(ng-if="ctrl.trackReady && ctrl.markersReady && ctrl.startMarkerReady")
+  #errorReady(ng-if="ctrl.errorReady")
