@@ -18,6 +18,20 @@
 
         getList: function (params) {
           return this.findAll(params, {bypassCache: true});
+        },
+
+        patch: function (id, params) {
+
+          let resource = this;
+          let url = resource.getAdapter('http').defaults.basePath + '/' + resource.endpoint;
+
+          url += '/' + (_.get(id, 'id') || id);
+
+          return $http.patch(url, params)
+            .then(function (res) {
+              return res;
+            });
+
         }
 
       });
