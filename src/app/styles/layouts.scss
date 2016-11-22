@@ -2,3 +2,42 @@
   width: 900px;
   margin: 0 auto;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.signature-placeholder {
+  width: 200px;
+  border-bottom: solid 1px gray;
+  margin: 0 1em;
+}
+
+.flex-align-end {
+  align-items: flex-end;
+}
+
+.report-footer {
+  margin-top: 3em;
+}
+
+.report-header{
+  margin-top: 10px;
+}
+
+.spaced {
+  margin-right: 1em;
+}
