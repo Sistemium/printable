@@ -5,9 +5,13 @@
     .module('streports', [
       'ui.router',
       'ui.router.stateHelper',
-      'sistemium',
+      'jsd',
       'yaMap',
       'angularMoment',
       'io-barcode'
     ]);
+
+  angular
+    .module('jsd', ['sistemium']);
+
 })();
