@@ -1,28 +1,36 @@
+'use strict';
+
 (function () {
-  'use strict';
+
+  function ShipmentRoutesController($state, Schema, $log, ImageHelper, $q) {
+
+    let vm = this;
+    let ShipmentRoute = Schema.model('ShipmentRoute');
+
+    _.assign(vm, {
+      authorName: 'Бухгалтерова И.В.'
+    });
+
+    init($state.params.date);
+
+    function init(date) {
+
+      ShipmentRoute.findAll({date}, {cacheResponse: false})
+        .then(data => {
+          vm.data = _.filter(data, 'mapSrc');
+          return $q.all(_.map(vm.data, route => ImageHelper.loadImage(route.mapSrc)));
+        })
+        .then(() => vm.printReady = true)
+        .catch(error => {
+          $log.error(error);
+          vm.errorReady = true;
+        });
+
+    }
+
+  }
 
   angular.module('streports')
-    .controller('ShipmentRoutesController', function ShipmentRoutesController(ShipmentRoutesInitService, $state, $log) {
-      'ngInject'
+    .controller('ShipmentRoutesController', ShipmentRoutesController);
 
-      var vm = this;
-      vm.data = [];
-      vm.printReady = false;
-      vm.state = {
-        at: $state.params.accessToken
-      };
-
-      function init() {
-        ShipmentRoutesInitService.then(function (response) {
-          vm.data = response.data;
-          vm.printReady = true;
-        }, function (response) {
-          $log.error(response);
-          vm.printReady = true;
-        });
-      }
-
-      init();
-    })
-  ;
 })();

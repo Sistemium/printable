@@ -8,7 +8,15 @@
     let ShipmentRoutePoint = Schema.model('ShipmentRoutePoint');
     let Location = Schema.model('Location');
 
-    return function (vm, shipmentRoute) {
+    return {getRoutes, saveReportData};
+
+    function saveReportData(shipmentRoute, data) {
+      return ShipmentRoute.patch(shipmentRoute, {
+        reportData: data
+      });
+    }
+
+    function getRoutes(vm, shipmentRoute) {
       return ShipmentRoute.find(shipmentRoute)
         .then(function (sr) {
 
@@ -17,7 +25,7 @@
           return Location.findAll({shipmentRoute: sr.id}, {cacheResponse: false, bypassCache: true})
             .then(function (data) {
               vm.rawLocations = _.filter(data, {source: null});
-              return ShipmentRoute.loadRelations(sr, ['ShipmentRoutePoint'], {bypassCache: true})
+              return ShipmentRoute.loadRelations(sr, ['ShipmentRoutePoint', 'Driver'], {bypassCache: true})
                 .then(function () {
                   vm.shipmentRoutePoints = _.filter(sr.points, 'shipment.ndocs.length');
                   return $q.all(_.map(vm.shipmentRoutePoints, i => {
@@ -30,7 +38,7 @@
           vm.serverError = res;
         });
 
-    };
+    }
   }
 
   angular.module('streports')

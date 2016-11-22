@@ -7,7 +7,8 @@
   function ShipmentRouteReportModalCtrl(mapsHelper, $timeout, $log, $state, ShipmentRouteService) {
 
     var vm = this;
-    var readyDelay = 500;
+    var readyDelay = 1000;
+    var saveData = angular.isDefined($state.params.saveData);
 
     angular.extend(vm, {
 
@@ -162,6 +163,8 @@
                   content: 'Старт',
                   hintContent: moment(routeStart.timestamp + ' Z').format('HH:mm')
                 });
+              } else {
+                vm.startMarkerInit();
               }
 
             }
@@ -186,15 +189,40 @@
       vm.locations = [];
       vm.rawLocations = [];
 
-      vm.busy = ShipmentRouteService(vm, shipmentRoute);
+      vm.busy = ShipmentRouteService.getRoutes(vm, shipmentRoute);
 
       vm.busy.then(function (routePoints) {
 
         vm.data = _.sortBy(_.filter(routePoints, 'reachedAtLocation'), 'reachedAt.timestamp');
-        stopLoading();
-        initMap();
 
-      }, stopLoading);
+        let reportData = _.map(vm.data, point => {
+          return {
+            id: point.id,
+            reachedAtTimestamp: _.get(point, 'reachedAt.timestamp'),
+            shipment: point.shipment,
+            name: point.name
+          }
+        });
+
+        reportData = {
+          driver: {
+            name: _.get(vm.shipmentRoute, 'drivenBy.fullName'),
+            truckBrand: _.get(vm.shipmentRoute, 'drivenBy.truckBrand'),
+            truckNumber: _.get(vm.shipmentRoute, 'drivenBy.truckNumber')
+          },
+          routePoints: reportData
+        };
+
+        if (saveData) {
+          return ShipmentRouteService.saveReportData(shipmentRoute, reportData);
+        }
+
+      })
+        .then(()=>{
+          stopLoading();
+          initMap();
+        })
+        .catch(stopLoading);
 
     }
 

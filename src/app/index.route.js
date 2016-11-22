@@ -15,14 +15,14 @@
             children: [
               {
                 name: 'shipmentRoutes',
-                url: '/p',
+                url: '/shipmentRoutes/:date',
                 templateUrl: 'app/reports/shipmentRoutes/shipmentRoutes.html',
                 controller: 'ShipmentRoutesController',
-                controllerAs: 'ctrl'
+                controllerAs: 'vm'
               },
               {
                 name: 'shipmentRouteReportModal',
-                url: '/srrm/{id}',
+                url: '/srrm/{id}?saveData',
                 templateUrl: 'app/reports/shipmentRouteReportModal/shipmentRouteReportModal.html',
                 controller: 'ShipmentRouteReportModalController',
                 controllerAs: 'ctrl'

@@ -1,24 +1,41 @@
-h1 Shipment routes
+section.text-left(ng-repeat='route in vm.data track by route.id')
 
-table.table.table-striped.table-hover.table-responsive
-  tr.clickable(
-  ng-repeat='row in ctrl.data track by row.id'
-  ng-click='ctrl.click(row,$event)'
-  )
-    td {{ row.drivenBy.name }}
-      span(ng-if="row.driverAccount") &nbsp;
-        i.fa.fa-mobile.green
-    td.number
-      | {{row.agg.shipmentRoutePointCnt}}
-    td.number
-      | {{row.agg.shipmentCnt}}
-    td.number
-      | {{row.agg.volumeSum}}
-    //td.number(title="'Пробег'" sortable="'locationKm'" header-class="'number'")
-      | {{row.locationKm}}
-    td.buttons(title="'Прочее'")
-      span(ng-if="row.agg.volumeIncidentCnt" title="Были инциденты с товаром")
-        i.fa.fa-exclamation-triangle.red
-      button.btn.btn-default(ng-if="row.routePointsAgg.reachedCnt" title="Отчет о прибытии" ng-click="ctrl.printReport(row,$event)")
-        i.glyphicon.glyphicon-print.blue
-#printReady(ng-if="ctrl.printReady")
+  h3.text-center.report-header Отчет по мониторингу доставки товара Заказчика "ООО Проект-2015"
+
+    h5.flex
+      span.gray.spaced Дата:
+      span.flex-1 {{ ::route.date }}
+
+    h5.flex
+      span.gray.spaced Водитель:
+      span.flex-1 {{ ::route.reportData.driver.name }}
+
+    h5.flex
+      span.gray.spaced Автомобиль:
+      span.flex-1 «{{ ::route.reportData.driver.truckBrand }}» № {{ ::route.reportData.driver.truckNumber }}
+
+  div
+    img.width-100(ng-src='{{::route.mapSrc}}')
+
+  table.table.table-responsive
+    thead
+      th №
+      th Точка
+      th Накладные
+      th Прибыл
+    tbody
+      tr(ng-repeat='row in route.reportData.routePoints track by row.id')
+        td {{ $index + 1 }}
+        td {{ ::row.name }}
+        td {{ ::row.shipment.ndocs.join(', ') }}
+        td {{ ::row.reachedAtTimestamp | amUtc | amLocal | amDateFormat: 'HH:mm' }}
+
+  .report-footer.flex.flex-align-end
+    .text-right.flex-1 Отчет составил:
+    .signature-placeholder
+    .text-bold / {{ vm.authorName }} /
+
+  .page-footer
+
+#printReady(ng-if="vm.printReady")
+#errorReady(ng-if="vm.errorReady")
