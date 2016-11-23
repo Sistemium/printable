@@ -7,7 +7,7 @@
       stateHelperProvider
         .state({
             name: 'root',
-            url: '/{accessToken}',
+            url: '/{accessToken}/{pool}',
             templateUrl: 'app/main/main.html',
             controller: 'MainController',
             controllerAs: 'main',
