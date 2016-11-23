@@ -28,14 +28,14 @@
               return ShipmentRoute.loadRelations(sr, ['ShipmentRoutePoint', 'Driver'], {bypassCache: true})
                 .then(function () {
                   vm.shipmentRoutePoints = _.filter(sr.points, 'shipment.ndocs.length');
+                  if (!_.get(vm,'shipmentRoutePoints.length')) {
+                    return $q.reject('no shipmentRoutePoints with ndocs');
+                  }
                   return $q.all(_.map(vm.shipmentRoutePoints, i => {
                     return ShipmentRoutePoint.loadRelations(i, ['Location']);
                   }));
                 });
             });
-        })
-        .catch(function (res) {
-          vm.serverError = res;
         });
 
     }
