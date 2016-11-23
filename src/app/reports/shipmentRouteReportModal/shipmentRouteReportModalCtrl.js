@@ -4,7 +4,7 @@
   angular.module('streports')
     .controller('ShipmentRouteReportModalController', ShipmentRouteReportModalCtrl);
 
-  function ShipmentRouteReportModalCtrl(mapsHelper, $timeout, $log, $state, ShipmentRouteService) {
+  function ShipmentRouteReportModalCtrl(mapsHelper, $timeout, $log, $state, ShipmentRouteService, $q) {
 
     var vm = this;
     var readyDelay = 1000;
@@ -197,6 +197,10 @@
       vm.busy.then(function (routePoints) {
 
         vm.data = _.sortBy(_.filter(routePoints, 'reachedAtLocation'), 'reachedAt.timestamp');
+
+        if (!vm.data.length) {
+          return $q.reject('no data with reachedAtLocation');
+        }
 
         let reportData = _.map(vm.data, point => {
           return {
