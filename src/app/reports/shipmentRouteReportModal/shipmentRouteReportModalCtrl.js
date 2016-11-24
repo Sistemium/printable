@@ -207,7 +207,8 @@
             id: point.id,
             reachedAtTimestamp: _.get(point, 'reachedAt.timestamp'),
             shipment: point.shipment,
-            name: point.name
+            name: point.name,
+            address: point.address
           }
         });
 

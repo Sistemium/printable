@@ -21,9 +21,17 @@
         .then(data => {
           $log.info('ShipmentRoute.data.length:', data.length);
           vm.data = _.filter(data, 'mapSrc');
-          return $q.all(_.map(vm.data, route => {
+          return $q.all(_.map(vm.data, (route, idx) => {
+
+            _.each(route.reportData.routePoints, point => {
+              point.title = _.last(point.name.match(/([^\(]+) \(/));
+            });
+
             return ImageHelper.loadImage(route.mapSrc)
-              .then(img => $log.info('Got image', _.set(route, 'map.src', img.src)))
+              .then(img => {
+                _.set(route, 'map.src', img.src);
+                $log.info('Got image #' + idx);
+              })
           }));
         })
         .then(() => vm.printReady = true)
