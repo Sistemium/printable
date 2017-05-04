@@ -3,18 +3,15 @@
   'use strict';
 
   angular.module('streports')
-    .controller('PickingOrderBarcodesController', function ($http, $state, $log) {
+    .controller('PickingOrderBarcodesController', function ($state, $log, Schema) {
 
-      var vm = this;
+      const vm = this;
+      const {PickingOrderBarcodeSample} = Schema.models();
 
-      $http.get('https://api.sistemium.com/v4d/bs/pickingOrderBarcodeSample', {
-        params: {
-          pickingOrderId: $state.params.id,
-          'x-page-size:': 1000,
-          'x-order-by:': 'name'
-        }
-      }).then(function (response) {
-        vm.pickingOrderBarcodes = response.data;
+      PickingOrderBarcodeSample.findAll({
+        pickingOrderId: $state.params.id
+      }).then(function (data) {
+        vm.pickingOrderBarcodes = data;
         vm.printReady = true;
       }).catch((function (err) {
         $log.error(err);
