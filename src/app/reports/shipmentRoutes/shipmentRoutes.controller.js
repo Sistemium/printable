@@ -6,6 +6,7 @@
 
     let vm = this;
     let ShipmentRoute = Schema.model('ShipmentRoute');
+    let ShipmentMonitoringReport = Schema.model('ShipmentMonitoringReport');
 
     _.assign(vm, {
       authorName: 'Бухгалтерова И.В.'
@@ -17,7 +18,7 @@
 
       $log.info('ShipmentRoutesController.init', date);
 
-      ShipmentRoute.findAll({date}, {cacheResponse: false})
+      let routes = ShipmentRoute.findAll({date}, {cacheResponse: false})
         .then(data => {
           $log.info('ShipmentRoute.data.length:', data.length);
           vm.data = _.filter(data, 'mapSrc');
@@ -33,7 +34,21 @@
                 $log.info('Got image #' + idx);
               })
           }));
-        })
+        });
+
+      let report = ShipmentMonitoringReport.findAll({date})
+        .then(res => {
+          let data = _.first(res);
+          if (!data) {
+            return $q.reject('ShipmentMonitoringReport not found');
+          }
+          _.assign(vm, {
+            authorName: data.authorName,
+            orgName: data.orgName
+          });
+        });
+
+      $q.all([routes, report])
         .then(() => vm.printReady = true)
         .catch(error => {
           $log.error(error);
