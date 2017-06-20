@@ -16,15 +16,15 @@
           hasOne: {
             ShipmentRoute: {
               localField: 'parentRoute',
-              localKey: 'shipmentRoute'
+              localKey: 'shipmentRouteId'
             },
             Location: {
               localField: 'reachedAt',
-              localKey: 'reachedAtLocation'
+              localKey: 'reachedAtLocationId'
             },
             ShippingLocation: {
               localField: 'shippingAtLocation',
-              localKey: 'shippingLocation'
+              localKey: 'shippingLocationId'
             }
           }
         },

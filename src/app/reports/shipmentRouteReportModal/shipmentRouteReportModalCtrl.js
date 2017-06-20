@@ -6,9 +6,9 @@
 
   function ShipmentRouteReportModalCtrl(mapsHelper, $timeout, $log, $state, ShipmentRouteService, $q) {
 
-    var vm = this;
-    var readyDelay = 1000;
-    var saveData = angular.isDefined($state.params.saveData);
+    const vm = this;
+    const readyDelay = 1000;
+    const saveData = angular.isDefined($state.params.saveData);
 
     angular.extend(vm, {
 
@@ -196,7 +196,7 @@
 
       vm.busy.then(function (routePoints) {
 
-        vm.data = _.sortBy(_.filter(routePoints, 'reachedAtLocation'), 'reachedAt.timestamp');
+        vm.data = _.sortBy(_.filter(routePoints, 'reachedAtLocationId'), 'reachedAt.timestamp');
 
         if (!vm.data.length) {
           return $q.reject('no data with reachedAtLocation');

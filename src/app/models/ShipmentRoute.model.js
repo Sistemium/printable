@@ -17,17 +17,17 @@
           hasOne: {
             Driver: {
               localField: 'drivenBy',
-              localKey: 'driver'
+              localKey: 'driverId'
             }
           },
           hasMany: {
             ShipmentRoutePoint: {
               localField: 'points',
-              foreignKey: 'shipmentRoute'
+              foreignKey: 'shipmentRouteId'
             },
             ShippingArticleIncident: {
               localField: 'incidents',
-              foreignKey: 'shipmentRoute'
+              foreignKey: 'shipmentRouteId'
             }
           }
         },

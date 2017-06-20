@@ -4,9 +4,8 @@
 
   function ShipmentRoutesController($state, Schema, $log, ImageHelper, $q) {
 
-    let vm = this;
-    let ShipmentRoute = Schema.model('ShipmentRoute');
-    let ShipmentMonitoringReport = Schema.model('ShipmentMonitoringReport');
+    const vm = this;
+    const {ShipmentRoute, ShipmentMonitoringReport} = Schema.models();
 
     _.assign(vm, {
       authorName: 'Бухгалтерова И.В.'
