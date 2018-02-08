@@ -33,6 +33,11 @@
                 templateUrl: 'app/reports/pickingOrderBarcodes/pickingOrderBarcodes.html',
                 controller: 'PickingOrderBarcodesController',
                 controllerAs: 'ctrl'
+              },
+              {
+                name: 'visitReportMap',
+                url: '/visitReportMap/{date}/{salesmanId}?saveData',
+                template: '<visit-report-map></visit-report-map>'
               }
             ]
           }
