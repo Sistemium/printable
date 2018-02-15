@@ -20,6 +20,18 @@
     Functions
      */
 
+    function yRoute(wayPoints) {
+
+      let points = _.map(wayPoints, point => {
+        return {type: 'wayPoint', point};
+      });
+
+      return me.yandex.route(points, {
+        // mapStateAutoApply: true
+      });
+
+    }
+
     function distanceFn(a, b) {
       return me.yandex.coordSystem.geo.distance(a, b);
     }
@@ -126,6 +138,7 @@
       distanceFn,
       bounds,
       yPixelCoords,
+      yRoute,
 
       checkinIcon
 
