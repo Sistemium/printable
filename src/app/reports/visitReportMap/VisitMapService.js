@@ -4,17 +4,29 @@
 
   function VisitMapService($q, Schema) {
 
-    let {VisitReport} = Schema.models();
+    let {VisitReport, VisitMapReport} = Schema.models();
 
     return {getRoutes, saveReportData};
 
-    function saveReportData() {
-      // return ShipmentRoute.patch(shipmentRoute, {
-      //   reportData: data
-      // });
+    function saveReportData(date, salesmanId, reportData) {
+
+      return VisitMapReport.findAll({date, salesmanId})
+        .then(_.first)
+        .then(found => {
+
+          let cnt = reportData.length;
+          let legalEntityId = _.first(reportData).employerLegalEntityId;
+
+          found = found || VisitMapReport.createInstance({date, salesmanId});
+
+          return _.assign(found, {cnt, reportData, legalEntityId})
+            .DSCreate();
+
+        });
+
     }
 
-    function getRoutes(vm, date, salesmanId) {
+    function getRoutes(date, salesmanId) {
 
       return VisitReport.findAll({date, salesmanId}, {cacheResponse: false, bypassCache: true})
         .then(visits => {
@@ -22,6 +34,7 @@
         });
 
     }
+
   }
 
   angular.module('streports')

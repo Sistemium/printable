@@ -15,18 +15,18 @@
         ng-repeat="point in vm.markers track by point.id"
         ya-source="point"
         )
-      ya-geo-object(
-      ya-options="{preset:'islands#brownStretchyIcon'}"
-      ng-if="vm.startMarker"
-      ya-source="vm.startMarker"
-      ya-after-init="vm.startMarkerInit($target)"
-      )
-      ya-geo-object(
-      ng-if="vm.track"
-      ya-source="vm.track"
-      ya-after-init="vm.trackInit($target)"
-      ya-options="{balloonHasCloseButton:false,strokeColor:'#000000',strokeWidth:2,strokeOpacity:1}"
-      )
+      //ya-geo-object(
+      //ya-options="{preset:'islands#brownStretchyIcon'}"
+      //ng-if="vm.startMarker"
+      //ya-source="vm.startMarker"
+      //ya-after-init="vm.startMarkerInit($target)"
+      //)
+      //ya-geo-object(
+      //ng-if="vm.track"
+      //ya-source="vm.track"
+      //ya-after-init="vm.trackInit($target)"
+      //ya-options="{balloonHasCloseButton:false,strokeColor:'#000000',strokeWidth:2,strokeOpacity:1}"
+      //)
 
-  #printReady(ng-if="vm.trackReady && vm.markersReady && vm.startMarkerReady")
+  #printReady(ng-if="vm.trackReady && vm.markersReady")
   #errorReady(ng-if="vm.errorReady") {{vm.errorReady}}

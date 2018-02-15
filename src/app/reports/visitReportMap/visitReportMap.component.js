@@ -10,7 +10,7 @@
 
     });
 
-  function visitReportMapController(mapsHelper, $timeout, $log, $state, VisitMapService, $q) {
+  function visitReportMapController(mapsHelper, $timeout, $log, $state, VisitMapService, $q, $scope) {
 
     const vm = this;
     const readyDelay = 1000;
@@ -24,9 +24,9 @@
         balloonAutoPanMargin: 0
       },
 
-      trackInit: () => setReady('trackReady'),
-      markersInit: () => setReady('markersReady'),
-      startMarkerInit: () => setReady('startMarkerReady')
+      markersInit: () => setReady('markersReady')
+      // trackInit: () => setReady('trackReady'),
+      // startMarkerInit: () => setReady('startMarkerReady')
 
     });
 
@@ -130,18 +130,28 @@
 
               let coordinates = _.map(rawLocations, yaLatLng);
 
-              vm.track = {
-                geometry: {
-                  type: 'LineString',
-                  coordinates
-                },
-                properties: {
-                  balloonContent: 'Марштут следования'
-                }
-              };
+              mapsHelper.yRoute(coordinates)
+                .then(route => {
 
+                  let paths = route.getPaths();
 
-              vm.startMarkerInit();
+                  paths.options.set({
+                    strokeWidth: 3,
+                    strokeColor: '0000ffff',
+                    opacity: 0.9
+                  });
+
+                  mapObj.geoObjects.add(paths);
+
+                  let reportData = _.map(paths.toArray(), path => {
+                    return path.getLength();
+                  });
+
+                  // console.warn('got paths:', pathsParts, route.getLength());
+                  $scope.$broadcast('reportData', reportData);
+
+                });
+
 
             }
 
@@ -165,7 +175,7 @@
         }
       }
 
-      vm.busy = VisitMapService.getRoutes(vm, date, salesmanId);
+      vm.busy = VisitMapService.getRoutes(date, salesmanId);
 
       vm.busy.then(onData)
         .then(() => {
@@ -185,6 +195,25 @@
         if (saveData) {
           return VisitMapService.saveReportData(date, salesmanId, vm.data);
         }
+
+        $scope.$on('reportData', (event, lengths) => {
+
+          let reportData = _.map(vm.data, (visit, idx) => {
+
+            let length = lengths[idx];
+
+            return _.assign({length}, visit);
+
+          });
+
+          VisitMapService.saveReportData(date, salesmanId, reportData)
+            .then(() => setReady('trackReady'))
+            .catch(error => {
+              $log.error(error);
+              vm.errorReady = true;
+            });
+
+        });
 
       }
 

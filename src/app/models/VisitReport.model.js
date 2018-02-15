@@ -7,6 +7,10 @@
         name: 'VisitReport'
       });
 
+      Schema.register({
+        name: 'VisitMapReport'
+      });
+
     });
 
 })();
