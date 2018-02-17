@@ -142,13 +142,13 @@
                   });
 
                   mapObj.geoObjects.add(paths);
+                  mapObj.setBounds(paths.getBounds());
 
-                  let reportData = _.map(paths.toArray(), path => {
-                    return path.getLength();
+                  vm.lengths = _.map(paths.toArray(), path => {
+                    return path.getLength() || 0;
                   });
 
-                  // console.warn('got paths:', pathsParts, route.getLength());
-                  $scope.$broadcast('reportData', reportData);
+                  $scope.$applyAsync();
 
                 });
 
@@ -168,13 +168,6 @@
 
       vm.isLoading = true;
 
-      function stopLoading(error) {
-        vm.isLoading = false;
-        if (error) {
-          vm.errorReady = error;
-        }
-      }
-
       vm.busy = VisitMapService.getRoutes(date, salesmanId);
 
       vm.busy.then(onData)
@@ -184,36 +177,48 @@
         })
         .catch(stopLoading);
 
+      $scope.$watch(() => !!vm.lengths, (gotLengths) => {
+        if (gotLengths) {
+          saveFinalData(vm.lengths);
+        }
+      });
+
+      function stopLoading(error) {
+        vm.isLoading = false;
+        if (error) {
+          vm.errorReady = error;
+        }
+      }
+
       function onData(routePoints) {
 
         vm.data = _.sortBy(routePoints, 'start.timestamp');
+        vm.date = date;
 
         if (!vm.data.length) {
           return $q.reject('no data with reachedAtLocation');
         }
 
-        if (saveData) {
-          return VisitMapService.saveReportData(date, salesmanId, vm.data);
-        }
+      }
 
-        $scope.$on('reportData', (event, lengths) => {
+      function saveFinalData(lengths) {
 
-          let reportData = _.map(vm.data, (visit, idx) => {
+        let reportData = _.map(vm.data, (visit, idx) => {
 
-            let length = lengths[idx];
+          let length = idx ? lengths[idx - 1] : 0;
 
-            return _.assign({length}, visit);
-
-          });
-
-          VisitMapService.saveReportData(date, salesmanId, reportData)
-            .then(() => setReady('trackReady'))
-            .catch(error => {
-              $log.error(error);
-              vm.errorReady = true;
-            });
+          return _.assign({length}, visit);
 
         });
+
+        $log.info('reportData', lengths);
+
+        VisitMapService.saveReportData(date, salesmanId, reportData)
+          .then(() => setReady('trackReady'))
+          .catch(error => {
+            $log.error(error);
+            vm.errorReady = true;
+          });
 
       }
 
