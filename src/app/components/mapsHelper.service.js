@@ -58,6 +58,9 @@
       };
     }
 
+    const LAT_MIN_DIFF = 0.001;
+    const LNG_MIN_DIFF = 0.001;
+
     function bounds(locations) {
 
       let
@@ -77,6 +80,16 @@
           longitude: maxLongitude.longitude
         }
       };
+
+      if (Math.abs(res.southwest.latitude - res.northeast.latitude) < LAT_MIN_DIFF) {
+        res.southwest.latitude -= LAT_MIN_DIFF / 2;
+        res.northeast.latitude += LAT_MIN_DIFF / 2;
+      }
+
+      if (Math.abs(res.southwest.longitude - res.northeast.longitude) < LNG_MIN_DIFF) {
+        res.southwest.longitude -= LNG_MIN_DIFF / 2;
+        res.northeast.longitude += LNG_MIN_DIFF / 2;
+      }
 
       res.center = {
         latitude: (res.southwest.latitude + res.northeast.latitude) / 2.0,

@@ -21,7 +21,9 @@
       mapOptions: {
         avoidFractionalZoom: false,
         margin: 0,
-        balloonAutoPanMargin: 0
+        balloonAutoPanMargin: 0,
+        maxZoom: 16,
+        minZoom: 0
       },
 
       markersInit: () => setReady('markersReady')
@@ -69,6 +71,8 @@
       };
 
       function afterMapInit(mapObj) {
+
+        $log.info('bounds:', bounds);
 
         mapObj.setBounds(
           [yaLatLng(bounds.southwest), yaLatLng(bounds.northeast)],
@@ -142,7 +146,11 @@
                   });
 
                   mapObj.geoObjects.add(paths);
-                  mapObj.setBounds(paths.getBounds());
+                  mapObj.setBounds(paths.getBounds(), {
+                    checkZoomRange: true,
+                    preciseZoom: true,
+                    zoomMargin: [40, 30, 20, 40]
+                  });
 
                   vm.lengths = _.map(paths.toArray(), path => {
                     return path.getLength() || 0;
@@ -212,6 +220,10 @@
         });
 
         $log.info('reportData', lengths);
+
+        if (!saveData) {
+          return;
+        }
 
         VisitMapService.saveReportData(date, salesmanId, reportData)
           .then(() => setReady('trackReady'))
