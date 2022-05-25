@@ -6,9 +6,10 @@
     "sistemium-angular": "^0.6.5",
     "ya-map": "angular-yandex-map#^1.0.9",
     "lodash": "^4.12.0",
-    "moment": "momentjs#^2.13.0",
-    "angular-moment": "1.0.0-beta.6",
-    "angular-io-barcode": "^1.0.4"
+    "moment": "^2.17.1",
+    "angular-moment": "^1.1.0",
+    "angular-io-barcode": "^1.0.4",
+    "visionmedia-debug": "^4.3.4"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"
