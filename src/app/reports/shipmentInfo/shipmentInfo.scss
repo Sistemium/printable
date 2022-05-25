@@ -15,6 +15,7 @@ shipment-info {
     text-align: left;
     > * {
       display: flex;
+      margin-top: 3px;
     }
   }
 
@@ -42,7 +43,7 @@ shipment-info {
   td {
     text-align: left;
     border-top: 1px solid #ddd;
-    padding: 8px;
+    padding: 5px;
   }
 
   tfoot th, tbody tr:first-child td {

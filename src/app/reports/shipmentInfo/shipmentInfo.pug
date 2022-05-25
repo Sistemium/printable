@@ -1,20 +1,17 @@
 .shipment-info
 
-  h1 Детализация отгрузки
+  h1 Детализация отгрузки № {{ vm.shipment.ndoc }}
 
   .shipment
+    .date
+      label Дата
+      strong {{ vm.shipment.date | amDateFormat:'DD.MM.YYYY' }}
     .outlet
       label Получатель
       strong {{ vm.shipment.outlet.partner.name }}
     .address
       label Адрес
       strong {{ vm.shipment.outlet.addressFull }}
-    .ndoc
-      label Накладная №
-      strong {{ vm.shipment.ndoc }}
-    .date
-      label Дата
-      strong {{ vm.shipment.date | amDateFormat:'DD.MM.YYYY' }}
 
   table
     thead
@@ -29,11 +26,11 @@
         td {{ $index +1 }}
         td {{ pos.article.name }}
         td.number
-          currency-value(value="pos.volume" currency="б" decimals="0")
+          currency-value(value="pos.volume" currency="б." decimals="0")
         td.number
-          currency-value(value="pos.price")
+          currency-value(value="pos.price" currency="р.")
         td.number
-          currency-value(value="pos.priceDoc")
+          currency-value(value="pos.priceDoc" currency="р." ng-if="pos.priceDoc !== pos.price")
     tfoot
       tr
         th(colspan="2")
