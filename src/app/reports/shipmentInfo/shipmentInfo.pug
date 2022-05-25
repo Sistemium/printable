@@ -1,0 +1,42 @@
+.shipment-info
+
+  h1 Детализация отгрузки
+
+  .shipment
+    .outlet
+      label Получатель
+      strong {{ vm.shipment.outlet.partner.name }}
+    .address
+      label Адрес
+      strong {{ vm.shipment.outlet.addressFull }}
+    .ndoc
+      label Накладная №
+      strong {{ vm.shipment.ndoc }}
+    .date
+      label Дата
+      strong {{ vm.shipment.date | amDateFormat:'DD.MM.YYYY' }}
+
+  table
+    thead
+      tr
+        th №
+        th Товар
+        th Количество
+        th Упр
+        th Бух
+    tbody
+      tr(ng-repeat="pos in vm.positions track by pos.id")
+        td {{ $index +1 }}
+        td {{ pos.article.name }}
+        td.number
+          currency-value(value="pos.volume" currency="б" decimals="0")
+        td.number
+          currency-value(value="pos.price")
+        td.number
+          currency-value(value="pos.priceDoc")
+    tfoot
+      tr
+        th(colspan="2")
+        th.number {{ vm.totalVolume | number:0 }}
+        th.number {{ vm.totalCost | number:2 }}
+        th.number {{ vm.totalCostDoc | number:2 }}

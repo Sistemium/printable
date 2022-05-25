@@ -1,0 +1,56 @@
+shipment-info {
+
+  .shipment-info {
+    padding: 10px;
+  }
+
+  h1 {
+    text-align: right;
+    margin: 0;
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  .shipment {
+    text-align: left;
+    > * {
+      display: flex;
+    }
+  }
+
+  label {
+    margin-right: 5px;
+    text-align: right;
+    min-width: 100px;
+    display: inline-block;
+  }
+
+  table {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  th {
+    text-align: center;
+    padding: 8px;
+  }
+
+  .number {
+    text-align: right;
+  }
+
+  td {
+    text-align: left;
+    border-top: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  tfoot th, tbody tr:first-child td {
+    border-top: 2px solid #ddd;
+  }
+
+  currency-value strong {
+    font-weight: normal;
+  }
+
+}

@@ -38,6 +38,11 @@
                 name: 'visitReportMap',
                 url: '/visitReportMap/{date}/{salesmanId}?saveData',
                 template: '<visit-report-map></visit-report-map>'
+              },
+              {
+                name: 'shipmentInfo',
+                url: '/shipmentInfo/{shipmentId}',
+                template: '<shipment-info></shipment-info>'
               }
             ]
           }
