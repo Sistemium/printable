@@ -1,0 +1,26 @@
+@import "../../styles/colors";
+
+currency-value {
+
+  display: inline-block;
+
+  .currency-value {
+    display: inline-block;
+  }
+
+  label {
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+
+  label + strong {
+    margin-left: 4px;
+  }
+
+}
+
+.currency {
+  font-weight: normal;
+  color: $light-gray;
+  margin-left: 3px;
+}
