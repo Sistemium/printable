@@ -17,7 +17,7 @@ angular.module('streports')
         if (!pool) {
           config.timeout = $q.reject('no pool');
         } else  if (/^JSDATA/.test(config.url)) {
-          config.url = config.url.replace(/^JSDATA/, `http://localhost:9090/api/${pool}`);
+          config.url = config.url.replace(/^JSDATA/, `https://api.sistemium.com/v4d/${pool}`);
         }
 
         return config;
