@@ -45,6 +45,7 @@
           vm.totalVolume = _.sumBy(positions, 'volume');
           vm.totalCost = _.sumBy(positions, ({ volume, price }) => volume * price);
           vm.totalCostDoc = _.sumBy(positions, ({ volume, priceDoc }) => volume * priceDoc);
+          vm.hasDoc = Math.abs(vm.totalCost - vm.totalCostDoc) >= 0.01;
         });
 
     }
